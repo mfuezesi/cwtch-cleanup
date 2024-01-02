@@ -1,6 +1,7 @@
 import type { PayloadHandler } from 'payload/config'
 import ical from 'ical-generator'
 import moment from 'moment'
+import { log } from 'console'
 
 // endpoint: http://10.10.5.126:3000/api/cal
 
@@ -13,16 +14,30 @@ export const calendar: PayloadHandler = async (req, res): Promise<void> => {
   //   }
 
   try {
-    const posts = await payload.find({
+    const events = await payload.find({
       collection: 'events',
+      pagination: false,
     })
 
-    var result = posts.docs.map(event => ({
+    var result = events.docs.map(event => ({
       summary: event.title,
       // summary: "Blocked",
       start: event.dateFrom,
       end: event.dateTo,
+      description:
+        'Client: ' +
+        event.relatedClient.firstname +
+        '\nResponsible: ' +
+        event.relatedMember.firstname +
+        '\nCleaner: ' +
+        event.relatedCleaner.firstname,
     }))
+
+    events.docs.map(event => {
+      console.log(event.relatedClient)
+    })
+
+    console.log(events)
 
     const calendar = ical({
       name: 'CWTCH',
