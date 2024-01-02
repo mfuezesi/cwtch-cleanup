@@ -11,7 +11,6 @@ import path from 'path'
 import { buildConfig } from 'payload/config'
 
 import Categories from './collections/Categories'
-import Comments from './collections/Comments'
 import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
 import { Posts } from './collections/Posts'
@@ -24,7 +23,6 @@ import Cleaners from './collections/Cleaners'
 import Events from './collections/Events'
 import BeforeDashboard from './components/BeforeDashboard'
 import BeforeLogin from './components/BeforeLogin'
-import { seed } from './endpoints/seed'
 import { calendar } from './endpoints/calendar'
 import { Footer } from './globals/Footer'
 import { Header } from './globals/Header'
@@ -63,10 +61,6 @@ export default buildConfig({
         alias: {
           ...config.resolve.alias,
           dotenv: path.resolve(__dirname, './dotenv.js'),
-          [path.resolve(__dirname, './endpoints/seed')]: path.resolve(
-            __dirname,
-            './emptyModuleMock.js',
-          ),
         },
       },
     }),
@@ -76,7 +70,19 @@ export default buildConfig({
     url: process.env.DATABASE_URI,
   }),
   serverURL: process.env.PAYLOAD_PUBLIC_SERVER_URL,
-  collections: [Events, Clients, Contracts, Cleaners, Members, Pages, Posts, Projects, Media, Categories, Users, Comments],
+  collections: [
+    Events,
+    Clients,
+    Contracts,
+    Cleaners,
+    Members,
+    Pages,
+    Posts,
+    Projects,
+    Media,
+    Categories,
+    Users,
+  ],
   globals: [Settings, Header, Footer],
   typescript: {
     outputFile: path.resolve(__dirname, 'payload-types.ts'),
@@ -87,13 +93,6 @@ export default buildConfig({
   cors: [process.env.PAYLOAD_PUBLIC_SERVER_URL || ''].filter(Boolean),
   csrf: [process.env.PAYLOAD_PUBLIC_SERVER_URL || ''].filter(Boolean),
   endpoints: [
-    // The seed endpoint is used to populate the database with some example data
-    // You should delete this endpoint before deploying your site to production
-    {
-      path: '/seed',
-      method: 'get',
-      handler: seed,
-    },
     {
       path: '/cal',
       method: 'get',
