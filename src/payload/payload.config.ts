@@ -14,7 +14,6 @@ import Categories from './collections/Categories'
 import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
 import { Posts } from './collections/Posts'
-import { Projects } from './collections/Projects'
 import Users from './collections/Users'
 import { Contracts } from './collections/Contracts'
 import Members from './collections/Members'
@@ -78,7 +77,6 @@ export default buildConfig({
     Members,
     Pages,
     Posts,
-    Projects,
     Media,
     Categories,
     Users,
@@ -108,7 +106,7 @@ export default buildConfig({
       collections: ['categories'],
     }),
     seo({
-      collections: ['pages', 'posts', 'projects'],
+      collections: ['pages', 'posts'],
       generateTitle,
       uploadsCollection: 'media',
     }),
