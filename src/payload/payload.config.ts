@@ -10,10 +10,8 @@ import dotenv from 'dotenv'
 import path from 'path'
 import { buildConfig } from 'payload/config'
 
-import Categories from './collections/Categories'
 import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
-import { Posts } from './collections/Posts'
 import Users from './collections/Users'
 import { Contracts } from './collections/Contracts'
 import Members from './collections/Members'
@@ -76,9 +74,7 @@ export default buildConfig({
     Cleaners,
     Members,
     Pages,
-    Posts,
     Media,
-    Categories,
     Users,
   ],
   globals: [Settings, Header, Footer],
@@ -100,13 +96,10 @@ export default buildConfig({
   plugins: [
     // formBuilder({}),
     redirects({
-      collections: ['pages', 'posts'],
-    }),
-    nestedDocs({
-      collections: ['categories'],
+      collections: ['pages'],
     }),
     seo({
-      collections: ['pages', 'posts'],
+      collections: ['pages'],
       generateTitle,
       uploadsCollection: 'media',
     }),
